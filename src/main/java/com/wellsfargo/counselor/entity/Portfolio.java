@@ -1,59 +1,47 @@
 package com.wellsfargo.counselor.entity;
 
-import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 public class Portfolio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long portfolioId;
+    @GeneratedValue()
+    private long portfolioId;
+
+    @ManyToOne
+    private Client client;
 
     @Column(nullable = false)
-    private long ClientId;
+    private String creationDate;
 
+    protected Portfolio() {
 
-    @Column(nullable = false)
-    private Date creationDate;
-    public Date getCreationDate() {
-        return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public Portfolio(Client client, String creationDate) {
+        this.client = client;
         this.creationDate = creationDate;
     }
-
-
-    public Portfolio() {
-
-    }
-    // Other properties
 
     public Long getPortfolioId() {
         return portfolioId;
     }
 
-    public Client getClientId() {
+    public Client getCLient() {
         return client;
     }
 
-    public void setClientId(Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
+    public String getCreationDate() {
+        return creationDate;
+    }
 
-    public Portfolio(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
-
-    @OneToMany(mappedBy = "portfolio")
-    private List<Security> securities;
-
-    // Constructors, getters, and setters
 }
